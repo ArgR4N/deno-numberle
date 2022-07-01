@@ -1,4 +1,4 @@
-import { green } from "https://deno.land/std@0.146.0/fmt/colors"
+import { bgGreen, bgYellow, bgBrightBlack, bgRed, bold } from "https://deno.land/std@0.146.0/fmt/colors.ts"
 
 const MAX_TRIES = 6
 const previousGuesses:any = []
@@ -7,20 +7,25 @@ const previousGuesses:any = []
 let globalResults = ''
 
 //Random number for the guess =>
-let number = Math.floor(Math.random() * 9999) + 1000
+const number = Math.floor(Math.random() * 8999) + 1000
 
 function colorLetter(i:number, letter:string):any {
-    
+    if(letter == `${number}`[i]) return bgGreen(bold(` ${letter} `))
+    if(`${number}`.includes(letter)) return bgYellow(bold(` ${letter} `))
+    return bgBrightBlack(bold(` ${letter} `))
 }
 
 function print(guess){
-    let readyGuess:Array<string> = []
+    console.clear()
+    console.log('\n')
+
+    let readyGuess:string  = ''
 
     guess.forEach((letter, i) => {
-        readyGuess.push(colorLetter(i, letter)) 
-    });
+        readyGuess += `${colorLetter(i, letter)} `
+    })
 
-    globalResults += `\t${readyGuess}\n`
+    globalResults += `\t${readyGuess}\n\n`
 
     console.log(globalResults)
 
@@ -42,7 +47,7 @@ function askNumber() {
 
 function start(tries: number):void{
     if(tries >= MAX_TRIES){
-        console.log(`You lost!\nThe number was ${number}`)
+        console.log(bgRed(bold(` You lost!  The number was ${number} `)) + '\n')
         return;
     }
     let guessExists:boolean = false
@@ -57,11 +62,11 @@ function start(tries: number):void{
     }
 
     if(guess == number){
-        print(guess)
-        console.log('You won!')
+        print([...`${guess}`])
+        console.log('\t' + bgGreen(bold(' You Won! ')) + '\n')
         return
     } else{
-        print(guess)
+        print([...`${guess}`])
         tries++
         start(tries)
     }
