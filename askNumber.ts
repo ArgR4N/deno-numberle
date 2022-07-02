@@ -1,6 +1,6 @@
 import { bgGreen, bgYellow, bgBrightBlack, bgRed, bold } from "https://deno.land/std@0.146.0/fmt/colors.ts"
 
-const MAX_TRIES = 6
+const MAX_TRIES = 5
 const previousGuesses:any = []
 
 //For printing the guesses in this try and mark errors =>
@@ -37,17 +37,21 @@ function askNumber() {
 
     if(!Number(prmt)) return {error: 'The number must be possible!'}
 
-    if(response < 1000 || response > 9999)return {error: 'The number must be between 1000 and 9999(inclusive)'}
+    if(response < 1000 || response > 9999)return {error: 'The number is between 1000 and 10000 (not inclusive)'}
 
-    if(previousGuesses.includes(response)) return{error: 'You alredy tried this number! '} 
+    if(previousGuesses.includes(response)) return {error: 'You alredy tried this number! '} 
     else previousGuesses.push(response)
   
     return {response}
 }
 
 function start(tries: number):void{
+    if(!tries){
+	console.log(`You have ${MAX_TRIES} max tries! And...\n${bgYellow(bold('The number is between 1000 and 10000 (not inclusive)'))}`)
+    }
+
     if(tries >= MAX_TRIES){
-        console.log(bgRed(bold(` You lost!  The number was ${number} `)) + '\n')
+        console.log(bgRed(bold(` You lost! The number was ${number} `)) + '\n')
         return;
     }
     let guessExists:boolean = false
