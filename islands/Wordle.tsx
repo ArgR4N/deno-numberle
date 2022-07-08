@@ -15,16 +15,15 @@ type StateUpdater<S> = (value: S | ((prevState: S) => S)) => void;
 //Const´s =>
 const NUMBERS = Array(10).fill('').map((_ , i) => String(i));
 
-//Interfaces =>
-//interface WordleProps { tries: number }
-interface Key{ key: string }
-interface WordleProps{
-  CONFIG: Configuration
+interface WordleProps{ 
+  CONFIG: Configuration;
+  previousGuesses: NumberSpace[][]
+  setPreviousGuesses: StateUpdater<NumberSpace[][]>
 }
+
 //Types =>
 type Handler = (key: { key: string} ) => void;
 type KeyHandler = (key: string) => void
-
 
 //Other Functions =>
 const useEventListener = (eventName: string, handler: Handler) => {
@@ -44,8 +43,9 @@ const useEventListener = (eventName: string, handler: Handler) => {
 };
 
 //Main function =>
-export default function Wordle( { CONFIG }:WordleProps ) {
+export default function Wordle( { CONFIG, previousGuesses, setPreviousGuesses }:WordleProps ) {
   const { MAX_TRIES, NUMBER_LENGTH, NUMBER } = CONFIG
+
   //Classes =>
   class ActualGuessPair {
     first: number;
@@ -76,10 +76,7 @@ export default function Wordle( { CONFIG }:WordleProps ) {
           : this.second))
     }
   }
-  const [ previousGuesses, setPreviousGuesses ] = useState(
-    Array(MAX_TRIES).fill('')
-        .map(_ => Array(NUMBER_LENGTH).fill('')
-            .map(_ => new NumberSpace())))
+
   const [ actualGuess, setActualGuess ] = useState(new ActualGuessPair(0, 0))
 
   const colorNumbers: (guess: NumberSpace[]) => void = (guess) =>{
@@ -144,7 +141,6 @@ export default function Wordle( { CONFIG }:WordleProps ) {
       //Error -> Full length!
     }
   }
-  
   const handler: Handler = ({ key }) => {
     const KeyHandler:{[name: string]: KeyHandler} = {
       'Enter': checkRow,
@@ -161,7 +157,6 @@ export default function Wordle( { CONFIG }:WordleProps ) {
     //Caracter (Espacio Excluido) -> Chequear que sea numero, y agregarlo a la posicion indicada 
 
   }
-  
   useEventListener('keydown', handler)
 
   return <div class={tw` h-full flex flex-col gap-4 p-10  items-center`} >
@@ -175,4 +170,5 @@ export default function Wordle( { CONFIG }:WordleProps ) {
       ))
     }
   </div>
+
 }
