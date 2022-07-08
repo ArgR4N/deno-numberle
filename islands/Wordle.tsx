@@ -24,6 +24,27 @@ interface Key{ key: string }
 type Handler = (key: { key: string} ) => void;
 type KeyHandler = (key: string) => void
 
+
+//Other Functions =>
+const useEventListener = (eventName: string, handler: Handler) => {
+  const savedHandler:{ current: Handler } = useRef();
+
+  useEffect(() => {
+    savedHandler.current = handler;
+  }, [handler]);
+
+  useEffect(() => {
+    const eventListener = (event: { key : string }) => savedHandler.current(event);
+    globalThis.addEventListener(eventName, eventListener);
+    return () => {
+      globalThis.removeEventListener(eventName, eventListener);
+    };
+  }, [eventName, globalThis]);
+};
+
+//Main function =>
+export default function Wordle( { CONFIG }:WordleProps ) {
+  const { MAX_TRIES, NUMBER_LENGTH, NUMBER } = CONFIG
 //Classes =>
 class ActualGuessPair {
   first: number;
