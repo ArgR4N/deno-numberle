@@ -3,7 +3,7 @@ import { h } from "preact";
 import { useState, useContext } from "preact/hooks";
 import { createContext } from "preact/src"
 import { tw } from "@twind";
-import Wordle from "../islands/Wordle.tsx";
+import MainGame from "../islands/MainGame.tsx";
 
 //Main Config =>
 const CONFIG = {
@@ -20,7 +20,7 @@ export class NumberSpace{
 
   constructor(n ?: string){
     this.color = 'grey';
-    this.value = ''
+    this.value = n ? n : ''
   }
 
   ChangeColor(color: string): NumberSpace{
@@ -44,13 +44,9 @@ export default function Home() {
       <h1 class={tw`text-center font-bold text-gray-700`}> NUMBERLE </h1>
       <hr />
 
-        <Wordle 
+        <MainGame 
           CONFIG = { CONFIG } 
         />
-        {/* <Keyboard 
-          NUMBER={ CONFIG.NUMBER}
-          prevGuesses = { GuessesState[0] } 
-        /> */}
 
     </div>
   );
