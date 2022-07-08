@@ -97,7 +97,7 @@ export default function Wordle( { CONFIG }:WordleProps ) {
 
   }
   const checkWin: ( ) => boolean = ( ) => {
-    if(String(previousGuesses[actualGuess.first].map(e => e.value)) == String(String(1234).split(''))){
+    if(String(previousGuesses[actualGuess.first].map(e => e.value)) == String(String(NUMBER).split(''))){
       //Handle win =>
       alert('you win')
     }
