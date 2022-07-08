@@ -4,8 +4,10 @@
 
 import * as $0 from "./routes/api/joke.ts";
 import * as $1 from "./routes/index.tsx";
-import * as $$0 from "./islands/NumberBox.tsx";
-import * as $$1 from "./islands/Wordle.tsx";
+import * as $$0 from "./islands/Keyboard.tsx";
+import * as $$1 from "./islands/MainGame.tsx";
+import * as $$2 from "./islands/NumberBox.tsx";
+import * as $$3 from "./islands/Wordle.tsx";
 
 const manifest = {
   routes: {
@@ -13,8 +15,10 @@ const manifest = {
     "./routes/index.tsx": $1,
   },
   islands: {
-    "./islands/NumberBox.tsx": $$0,
-    "./islands/Wordle.tsx": $$1,
+    "./islands/Keyboard.tsx": $$0,
+    "./islands/MainGame.tsx": $$1,
+    "./islands/NumberBox.tsx": $$2,
+    "./islands/Wordle.tsx": $$3,
   },
   baseUrl: import.meta.url,
 };
