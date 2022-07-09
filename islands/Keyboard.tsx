@@ -31,7 +31,7 @@ const getRelevantColor = ( keys:NumberSpace[][] ):NumberSpace[] =>{
 }
 
 
-export default function Keyboard( { guesses }:KeyboardProps ){
+export default function Keyboard( { guesses, setActualGuess, actualGuess, addChar, delChar, checkRow }:KeyboardProps ){
     const DefaultKeys = new Array(10).fill('')
     .map((_e, i) => new NumberSpace(`${i}`))
     const [keys , setKeys] = useState(DefaultKeys)
@@ -42,11 +42,18 @@ export default function Keyboard( { guesses }:KeyboardProps ){
 
     return(
         <ol style={{width:'100px'}} class={tw`flex items-center justify-center flex-wrap gap-1`}>
+
           {keys.map(({ value, color }) =>(
-            <li class={tw`bg-${color}-200 rounded px-2 text-gray-700`}>
-                <p>{ value }</p>
+            <li >
+                <button onClick = {_ => addChar(value)} class={tw`focus:outline-none bg-${color}-200 hover:bg-${color}-300 rounded px-2 text-gray-700`}>{ value }</button>
             </li>
           ))}  
+            <li >
+                <button onClick = {_ => checkRow()} class={tw`focus:outline-none bg-${'green'}-500 hover:bg-${'green'}-600 rounded px-2 hover:text-green-600 text-green-500`}>{ '1' }</button>
+            </li>
+            <li >
+                <button onClick = {_ => delChar()} class={tw`focus:outline-none bg-${'red'}-500 hover:bg-${'red'}-600 rounded px-2 hover:text-red-600 text-red-500`}>{ '1' }</button>
+            </li>
         </ol>
     )
 }
