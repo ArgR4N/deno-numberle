@@ -9,7 +9,7 @@ import { NumberSpace, Configuration } from "../routes/index.tsx"
 //Components =>
 import Wordle from "./Wordle.tsx"
 import Keyboard from "./Keyboard.tsx"
-
+import Hints from "./Hints.tsx"
 //Interfaces =>
 interface MainGameProps{ CONFIG: Configuration }
 
@@ -22,15 +22,21 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
                 .map(_ => new NumberSpace()))
         )
   
-  return <div>
+  return <div class={tw`flex items-center justify-center flex-col `}>
         <Wordle 
             CONFIG={CONFIG} 
             previousGuesses = { previousGuesses }
             setPreviousGuesses = { setPreviousGuesses }
         />
-
-        <Keyboard 
-            guesses = { previousGuesses }
-        />
+        <span class={tw`bg-gray-100 items-center justify-center rounded flex p-2`}>
+            <Keyboard 
+                guesses = { previousGuesses }
+            />
+            <hr class={tw`border-l-1  border-gray-700 h-12`}/>
+            <Hints 
+                guesses = { previousGuesses }
+                CONFIG = { CONFIG }
+            />
+        </span>
     </div>
 }

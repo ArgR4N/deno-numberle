@@ -45,7 +45,7 @@ const useEventListener = (eventName: string, handler: Handler) => {
 //Main function =>
 export default function Wordle( { CONFIG, previousGuesses, setPreviousGuesses }:WordleProps ) {
   const { MAX_TRIES, NUMBER_LENGTH, NUMBER } = CONFIG
-
+  
   //Classes =>
   class ActualGuessPair {
     first: number;
@@ -77,7 +77,20 @@ export default function Wordle( { CONFIG, previousGuesses, setPreviousGuesses }:
     }
   }
 
+  //States =>
+  const [ alredyWinned, setAlredyWinned ] = useState(false)
   const [ actualGuess, setActualGuess ] = useState(new ActualGuessPair(0, 0))
+  //<= States 
+
+  const restartGame = () =>{
+    setActualGuess(new ActualGuessPair(0, 0))
+    console.log(previousGuesses)
+    setPreviousGuesses(
+      Array(MAX_TRIES).fill('')
+      .map(_ => Array(NUMBER_LENGTH).fill('')
+          .map(_ => new NumberSpace()))
+    )
+  }
 
   const colorNumbers: (guess: NumberSpace[]) => void = (guess) =>{
     const objective = String(NUMBER)
@@ -96,7 +109,7 @@ export default function Wordle( { CONFIG, previousGuesses, setPreviousGuesses }:
   const checkWin: ( ) => boolean = ( ) => {
     if(String(previousGuesses[actualGuess.first].map(e => e.value)) == String(String(NUMBER).split(''))){
       //Handle win =>
-      alert('you win')
+      return true
     }
     return false
   }
@@ -108,12 +121,16 @@ export default function Wordle( { CONFIG, previousGuesses, setPreviousGuesses }:
     return sum === n
   }
   const checkRow:KeyHandler = () =>{
-    if(checkLength(NUMBER_LENGTH)){
+    console.log(previousGuesses)
+    if(alredyWinned){
+      return restartGame()
+    }
+    else if(checkLength(NUMBER_LENGTH)){
       colorNumbers(previousGuesses[actualGuess.first])
-      checkWin()
       actualGuess.addFirst(setActualGuess)
     }
-    //if(checkWin()) endGame()
+    checkWin() && setAlredyWinned(true)
+
   }
   const delChar:KeyHandler = () =>{
     const newGuess = previousGuesses.slice()
@@ -164,7 +181,7 @@ export default function Wordle( { CONFIG, previousGuesses, setPreviousGuesses }:
       previousGuesses.map((guess: NumberSpace[]) => (
         <div class={tw`flex gap-5 `}>
             {
-              guess.map((number: NumberSpace) => <NumberBox number={number}/> )
+              guess.map((number: NumberSpace) => <NumberBox styles={CONFIG.COLORS_VALUES} number={number}/> )
             }
         </div>
       ))

@@ -5,13 +5,6 @@ import { createContext } from "preact/src"
 import { tw } from "@twind";
 import MainGame from "../islands/MainGame.tsx";
 
-//Main Config =>
-const CONFIG = {
-  NUMBER_LENGTH: 4,
-  MAX_TRIES: 5,
-  NUMBER: Math.floor(Math.random() * (Math.pow(10, 4) - 1 - Math.pow(10, 4 - 1)) + Math.pow(10, 4 - 1))
-}
-//<= Main Config
 
 //Main Classes and Interfaces =>
 export class NumberSpace{
@@ -19,7 +12,7 @@ export class NumberSpace{
   value: string;
 
   constructor(n ?: string){
-    this.color = 'grey';
+    this.color = 'gray';
     this.value = n ? n : ''
   }
 
@@ -28,11 +21,30 @@ export class NumberSpace{
     return this
   }
 }
+
 export interface Configuration{
-  [name: string]: number
+  COLORS_VALUES: {[n: string]:string},
+  NUMBER_LENGTH: number,
+  MAX_TRIES: number,
+  NUMBER: number,
 }
 // <= Main Classes and Interfaces 
 
+const getRandomNumber = () => Math.floor(Math.random() * (Math.pow(10, 4) - 1 - Math.pow(10, 4 - 1)) + Math.pow(10, 4 - 1))
+
+//Main Config =>
+const CONFIG:Configuration = {
+  NUMBER_LENGTH: 4,
+  MAX_TRIES: 5,
+  NUMBER: getRandomNumber(),
+  COLORS_VALUES: {
+    'yellow':'yellow-300',
+    'red':'red-500',
+    'green':'green-200',
+    'gray':'gray-200'
+  }
+}
+//<= Main Config
 
 export default function Home() {
   

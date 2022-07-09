@@ -11,26 +11,42 @@ interface KeyboardProps {
     guesses: NumberSpace[][]
 }
 
-// const getRelevantColor = ( keys:NumberSpace[][] ):NumberSpace[] =>{
-//   return new NumberSpace
-// }
+
+const getRelevantColor = ( keys:NumberSpace[][] ):NumberSpace[] =>{
+    const KeysGuide =new Array(10).fill('')
+    .map((_e, i) => new NumberSpace(`${i}`))
+
+    keys.forEach(keyArray => {
+        keyArray.forEach(key =>{
+            if(key.color != 'gray'){
+                if(key.color != KeysGuide[Number(key.value)].color && KeysGuide[Number(key.value)].color != 'green'){
+                    KeysGuide[Number(key.value)].color = key.color
+                }else if(key.color == 'green'){
+                    KeysGuide[Number(key.value)].color = key.color
+                }
+            }
+        })
+    });
+    return KeysGuide
+}
 
 
 export default function Keyboard( { guesses }:KeyboardProps ){
-    const [keys , setKeys] = useState([1, 2])
+    const DefaultKeys = new Array(10).fill('')
+    .map((_e, i) => new NumberSpace(`${i}`))
+    const [keys , setKeys] = useState(DefaultKeys)
 
     useEffect(() => {
-        // setKeys(getRelevantColor(keys))
-    }, [guesses[0]])
+        setKeys(getRelevantColor(guesses))
+    }, [guesses])
 
     return(
-        <ol>
-          {/* {keys.map(e =>(
-            <span class={tw`bg-red-200 absolute inset-0`}>
-                { e }
-                { console.log(e) }
-            </span>
-          ))}   */}
+        <ol style={{width:'100px'}} class={tw`flex items-center justify-center flex-wrap gap-1`}>
+          {keys.map(({ value, color }) =>(
+            <li class={tw`bg-${color}-200 rounded px-2 text-gray-700`}>
+                <p>{ value }</p>
+            </li>
+          ))}  
         </ol>
     )
 }
