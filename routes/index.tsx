@@ -22,6 +22,19 @@ export class NumberSpace{
   }
 }
 
+ class WordleInstance{
+    max_tries: number;
+    previousGuesses: NumberSpace[][]
+    setPreiousGuesses: StateUpdater<NumberSpace[][]>
+
+    constructor(max: number, ){
+      this.max_tries = max
+      const [this.previousGuesses, this.setPreviousGuesses] = useState([])
+      
+    }
+
+ }
+
 export interface Configuration{
   COLORS_VALUES: {[n: string]:string},
   NUMBER_LENGTH: number,

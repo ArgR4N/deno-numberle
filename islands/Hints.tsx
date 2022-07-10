@@ -10,7 +10,7 @@ interface HintsProps{
     guesses: NumberSpace[][];
     CONFIG: Configuration;
 }
-
+//i
 const getRelevantColor = ( keys:NumberSpace[][] ):string =>{
     const KeysGuide:string[] = ['?', '?', '?', '?']
 
