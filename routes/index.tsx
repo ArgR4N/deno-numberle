@@ -1,5 +1,5 @@
 /** @jsx h */
-import { h } from "preact";
+import { h, Component } from "preact";
 import { useState, useContext } from "preact/hooks";
 import { createContext } from "preact/src"
 import { tw } from "@twind";
@@ -22,18 +22,15 @@ export class NumberSpace{
   }
 }
 
- class WordleInstance{
-    max_tries: number;
-    previousGuesses: NumberSpace[][]
-    setPreiousGuesses: StateUpdater<NumberSpace[][]>
+//  class WordleInstance extends Component{
+//     constructor(max: number, ){
+//       super() 
+//     }
+//     render() {
+//     return <div></div>
+//     }
 
-    constructor(max: number, ){
-      this.max_tries = max
-      const [this.previousGuesses, this.setPreviousGuesses] = useState([])
-      
-    }
-
- }
+//  }
 
 export interface Configuration{
   COLORS_VALUES: {[n: string]:string},
