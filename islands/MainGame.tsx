@@ -142,13 +142,14 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
       }
     
       const checkRow:KeyHandler = () =>{
-        if(alredyWinned || fullBoard){
-          return restartGame()
+        if(alredyWinned || fullBoard) return restartGame()
+        if(!checkFeatures(NUMBER) || !checkLength(NUMBER_LENGTH)) {
+          return alert("The number must meet one of the two characteristics and have 4 digits")
         }
         else if(checkLength(NUMBER_LENGTH)){
           if(checkFeatures(NUMBER)) console.log('a')
           colorNumbers(previousGuesses[actualGuess.first])
-          actualGuess.addFirst(setActualGuess)
+        actualGuess.addFirst(setActualGuess)
         }
         checkWin() && setAlredyWinned(true)
     
