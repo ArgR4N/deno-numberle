@@ -40,6 +40,21 @@ export interface Configuration{
 }
 // <= Main Classes and Interfaces 
 
+export const getPrime = ( n: number ) => {
+  let isPrime = true;
+    for (let i = 2; i < n; i++) {
+        if (n % i == 0) {
+            isPrime = false;
+            break;
+        }
+    }
+  return isPrime
+}
+
+export const getPair = ( n:number ) => n % 2;
+
+
+
 const getRandomNumber = () => Math.floor(Math.random() * (Math.pow(10, 4) - 1 - Math.pow(10, 4 - 1)) + Math.pow(10, 4 - 1))
 
 //Main Config =>
