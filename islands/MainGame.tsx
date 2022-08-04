@@ -32,6 +32,7 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
 
     //States =>
     const [ alredyWinned, setAlredyWinned ] = useState(false)
+    const [ fullBoard, setFullBoard ] = useState(false)
     //Classes =>
       class ActualGuessPair {
         first: number;
@@ -107,6 +108,8 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
           .map(_ => Array(NUMBER_LENGTH).fill('')
               .map(_ => new NumberSpace()))
         )
+        setAlredyWinned(false)
+        setFullBoard(false)
       }
     
       const colorNumbers: (guess: NumberSpace[]) => void = (guess) =>{
@@ -124,7 +127,13 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
     
       }
       const checkFeatures = (n: number):boolean => {
-        return getPair(Number(previousGuesses[actualGuess.first])) != getPair(NUMBER) && getPrime(Number(previousGuesses[actualGuess.first])) != getPrime(NUMBER)
+        let lastNumber = Number()
+        previousGuesses[actualGuess.first].map(e => Number(e.value))
+        .reverse()
+        .forEach((e, i) => lastNumber += e * Math.pow(10, i))
+        console.log(NUMBER)
+        console.log({"pair": getPair(lastNumber), "prime": getPrime(lastNumber)}, getPair(lastNumber) == getPair(NUMBER), getPrime(lastNumber) == getPrime(NUMBER))
+        return getPair(lastNumber) == getPair(NUMBER) || getPrime(lastNumber) == getPrime(NUMBER)
       }
       const checkWin: ( ) => boolean = ( ) => {
         if(String(previousGuesses[actualGuess.first].map(e => e.value)) == String(String(NUMBER).split(''))){
@@ -138,6 +147,12 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
         previousGuesses[actualGuess.first].forEach(el => {
           if(el.value) sum++
         })
+        if(actualGuess.first == previousGuesses.length - 1){
+          setFullBoard(true)
+        }
+        if(checkWin()){
+          setAlredyWinned(true)
+        }
         return sum === n
       }
     
