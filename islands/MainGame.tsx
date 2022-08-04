@@ -167,7 +167,7 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
         actualGuess.addFirst(setActualGuess)
         }
         checkWin() && setAlredyWinned(true)
-    
+ 
       }
   return <div class={tw`flex items-center justify-center flex-col `}>
         <Wordle 
