@@ -41,7 +41,6 @@ export interface Configuration{
 // <= Main Classes and Interfaces 
 
 export const getPrime = ( n: number ) => {
-  let isPrime = true;
     for (let i = 2; i < n; i++) {
         if (n % i == 0) {
             return false;
