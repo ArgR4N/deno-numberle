@@ -44,11 +44,10 @@ export const getPrime = ( n: number ) => {
   let isPrime = true;
     for (let i = 2; i < n; i++) {
         if (n % i == 0) {
-            isPrime = false;
-            break;
+            return false;
         }
     }
-  return isPrime
+  return true
 }
 
 export const getEven = ( n:number ) => n % 2;
