@@ -2,7 +2,7 @@
 import { h } from "preact";
 import { useState, useEffect, useRef, useContext} from "preact/hooks";
 import {tw} from '@twind'
-import { getPair, getPrime } from "../routes/index.tsx"
+import { getEven, getPrime } from "../routes/index.tsx"
 
 //Ts=>
 import { NumberSpace, Configuration } from "../routes/index.tsx"
