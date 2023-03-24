@@ -28,7 +28,7 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
     const { MAX_TRIES, NUMBER_LENGTH, NUMBER } = CONFIG
 
   
-    const fullBoard = false
+    //const fullBoard = false //?
 
     //States =>
     const [ alredyWinned, setAlredyWinned ] = useState(false)
