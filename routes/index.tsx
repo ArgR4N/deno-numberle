@@ -51,7 +51,7 @@ export const getPrime = ( n: number ) => {
   return isPrime
 }
 
-export const getPair = ( n:number ) => n % 2;
+export const getEven = ( n:number ) => n % 2;
 
 
 
