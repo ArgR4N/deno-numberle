@@ -6,7 +6,7 @@ import {tw} from '@twind'
 
 
 
-import {getPair, getPrime } from "../routes/index.tsx"
+import {getEven, getPrime } from "../routes/index.tsx"
 
 //Ts =>
 import { NumberSpace, Configuration } from "../routes/index.tsx"
@@ -132,8 +132,8 @@ export default function MainGame( { CONFIG }:MainGameProps ) {
         .reverse()
         .forEach((e, i) => lastNumber += e * Math.pow(10, i))
         console.log(NUMBER)
-        console.log({"pair": getPair(lastNumber), "prime": getPrime(lastNumber)}, getPair(lastNumber) == getPair(NUMBER), getPrime(lastNumber) == getPrime(NUMBER))
-        return getPair(lastNumber) == getPair(NUMBER) || getPrime(lastNumber) == getPrime(NUMBER)
+        console.log({"pair": getEven(lastNumber), "prime": getPrime(lastNumber)}, getEven(lastNumber) == getEven(NUMBER), getPrime(lastNumber) == getPrime(NUMBER))
+        return getEven(lastNumber) == getEven(NUMBER) || getPrime(lastNumber) == getPrime(NUMBER)
       }
       const checkWin: ( ) => boolean = ( ) => {
         if(String(previousGuesses[actualGuess.first].map(e => e.value)) == String(String(NUMBER).split(''))){
