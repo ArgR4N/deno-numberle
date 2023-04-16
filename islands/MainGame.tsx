@@ -22,7 +22,22 @@ type KeyHandler = (key: string) => void;
 
 //Main function =>
 export default function MainGame({ CONFIG }: MainGameProps) {
-  const { MAX_TRIES, NUMBER_LENGTH, NUMBER } = CONFIG;
+  const { MAX_TRIES, NUMBER_LENGTH } = CONFIG;
+
+  const [numberState, setNumberState] = useState(0);
+
+  useEffect(() => {
+    const fetchDailyRandom = async () => {
+      const response = await fetch(
+        "https://daily-random.vercel.app/getGlobalNumber"
+      );
+      const data = await response.json();
+      const globalNumber = data.globalRandom;
+      setNumberState(globalNumber);
+    };
+
+    fetchDailyRandom();
+  }, []);
 
   //const fullBoard = false //?
 
@@ -71,6 +86,7 @@ export default function MainGame({ CONFIG }: MainGameProps) {
           .map((_) => new NumberSpace())
       )
   );
+
   const [actualGuess, setActualGuess] = useState(new ActualGuessPair(0, 0));
 
   const delChar: KeyHandler = () => {
@@ -116,7 +132,7 @@ export default function MainGame({ CONFIG }: MainGameProps) {
   };
 
   const colorNumbers: (guess: NumberSpace[]) => void = (guess) => {
-    const objective = String(NUMBER);
+    const objective = String(numberState);
     const newGuess: NumberSpace[] = guess.map((num: NumberSpace, i: number) =>
       num.value == objective[i]
         ? num.ChangeColor("green")
@@ -134,21 +150,21 @@ export default function MainGame({ CONFIG }: MainGameProps) {
       .map((e) => Number(e.value))
       .reverse()
       .forEach((e, i) => (lastNumber += e * Math.pow(10, i)));
-    console.log(NUMBER);
+    console.log(numberState);
     console.log(
       { pair: getEven(lastNumber), prime: getPrime(lastNumber) },
-      getEven(lastNumber) == getEven(NUMBER),
-      getPrime(lastNumber) == getPrime(NUMBER)
+      getEven(lastNumber) == getEven(numberState),
+      getPrime(lastNumber) == getPrime(numberState)
     );
     return (
-      getEven(lastNumber) == getEven(NUMBER) ||
-      getPrime(lastNumber) == getPrime(NUMBER)
+      getEven(lastNumber) == getEven(numberState) ||
+      getPrime(lastNumber) == getPrime(numberState)
     );
   };
   const checkWin: () => boolean = () => {
     if (
       String(previousGuesses[actualGuess.first].map((e) => e.value)) ==
-      String(String(NUMBER).split(""))
+      String(String(numberState).split(""))
     ) {
       //Handle win =>
       return true;
@@ -171,12 +187,12 @@ export default function MainGame({ CONFIG }: MainGameProps) {
 
   const checkRow: KeyHandler = () => {
     if (alredyWinned || fullBoard) return restartGame();
-    if (!checkFeatures(NUMBER) || !checkLength(NUMBER_LENGTH)) {
+    if (!checkFeatures(numberState) || !checkLength(NUMBER_LENGTH)) {
       return alert(
         "The number must meet one of the two characteristics and have 4 digits"
       );
     } else if (checkLength(NUMBER_LENGTH)) {
-      if (checkFeatures(NUMBER)) console.log("a");
+      if (checkFeatures(numberState)) console.log("a");
       colorNumbers(previousGuesses[actualGuess.first]);
       actualGuess.addFirst(setActualGuess);
     }
