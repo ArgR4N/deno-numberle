@@ -32,8 +32,8 @@ export default function MainGame({ CONFIG }: MainGameProps) {
         "https://daily-random.vercel.app/getGlobalNumber"
       );
       const data = await response.json();
-      const globalNumber = data.globalRandom;
-      setNumberState(globalNumber);
+      const globalNumber = String(data.globalRandom).slice(0, NUMBER_LENGTH);
+      setNumberState(Number(globalNumber));
     };
 
     fetchDailyRandom();
