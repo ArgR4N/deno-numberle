@@ -1,38 +1,22 @@
 /** @jsx h */
 import { h } from "preact";
-import { useState, useEffect, useRef, useContext } from "preact/hooks";
+import { useEffect, useRef } from "preact/hooks";
 import { tw } from "@twind";
-
-//Ts =>
-import {
-  NumberSpace,
-  Configuration,
-} from "../routes/index.tsx";
-//Components =>
+import { NumberSpace } from "../routes/index.tsx";
 import NumberBox from "./NumberBox.tsx";
-
-//Preact type=>
-type StateUpdater<S> = (value: S | ((prevState: S) => S)) => void;
-
-//Const´s =>
-const NUMBERS = Array(10)
-  .fill("")
-  .map((_, i) => String(i));
+import { KeyHandler } from "./MainGame.tsx";
 
 interface WordleProps {
-  CONFIG: Configuration;
   previousGuesses: NumberSpace[][];
-  setPreviousGuesses: StateUpdater<NumberSpace[][]>;
-  actualGuess: any;
-  setActualGuess: StateUpdater<any>;
+  addChar: KeyHandler;
+  delChar: KeyHandler;
+  checkRow: KeyHandler;
 }
 
-//Types =>
 type Handler = (key: { key: string }) => void;
 
-//Other Functions =>
 const useEventListener = (eventName: string, handler: Handler) => {
-  const savedHandler: { current: Handler } = useRef();
+  const savedHandler = useRef();
 
   useEffect(() => {
     savedHandler.current = handler;
@@ -48,20 +32,12 @@ const useEventListener = (eventName: string, handler: Handler) => {
   }, [eventName, globalThis]);
 };
 
-//Main function =>
 export default function Wordle({
-  CONFIG,
   previousGuesses,
-  setPreviousGuesses,
-  actualGuess,
-  setActualGuess,
   addChar,
   delChar,
   checkRow,
 }: WordleProps) {
-  const { MAX_TRIES, NUMBER_LENGTH, NUMBER } = CONFIG;
-
-  //<= States
 
   const handler: Handler = ({ key }) => {
     const KeyHandler = {
@@ -70,15 +46,17 @@ export default function Wordle({
       Number: addChar,
     };
 
-    NUMBERS.includes(key) ? KeyHandler["Number"](key) : KeyHandler[key](key);
+    if (Number(key) || key === "0") KeyHandler["Number"](key);
+    else if (key === "Enter" || key === "Backspace") KeyHandler[key]();
   };
+
   useEventListener("keydown", handler);
 
   return (
-    <div class={tw` h-full flex flex-col gap-4 p-10  items-center`}>
-      {previousGuesses.map((guess: NumberSpace[]) => (
-        <div class={tw`flex gap-5 `}>
-          {guess.map((number: NumberSpace) => (
+    <div class={tw` h-full flex flex-col gap-1 p-10  items-center`}>
+      {previousGuesses.map((guess) => (
+        <div class={tw`flex gap-1 `}>
+          {guess.map((number) => (
             <NumberBox number={number} />
           ))}
         </div>

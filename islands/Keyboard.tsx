@@ -1,15 +1,17 @@
 /** @jsx h */
 import { h } from "preact";
-import { useState, useEffect, useRef, useContext } from "preact/hooks";
+import { useState, useEffect } from "preact/hooks";
 import { tw } from "@twind";
+import { KeyHandler } from "./MainGame.tsx"
+import { NumberSpace  } from "../routes/index.tsx";
 
-//Ts=>
-import { NumberSpace } from "../routes/index.tsx";
-
-//Interfaces =>
 interface KeyboardProps {
-  guesses: NumberSpace[][];
+  previousGuesses: NumberSpace[][];
+  addChar: KeyHandler;
+  delChar: KeyHandler;
+  checkRow: KeyHandler;
 }
+
 
 const getRelevantColor = (keys: NumberSpace[][]): NumberSpace[] => {
   const KeysGuide = new Array(10)
@@ -34,9 +36,7 @@ const getRelevantColor = (keys: NumberSpace[][]): NumberSpace[] => {
 };
 
 export default function Keyboard({
-  guesses,
-  setActualGuess,
-  actualGuess,
+  previousGuesses,
   addChar,
   delChar,
   checkRow,
@@ -47,8 +47,8 @@ export default function Keyboard({
   const [keys, setKeys] = useState(DefaultKeys);
 
   useEffect(() => {
-    setKeys(getRelevantColor(guesses));
-  }, [guesses]);
+    setKeys(getRelevantColor(previousGuesses));
+  }, [previousGuesses]);
 
   return (
     <ol
