@@ -1,4 +1,0 @@
-TO-DO:
-- pasar estilos a config de css
-- funcionar teclado
-- mejorar win y lost
