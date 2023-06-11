@@ -93,7 +93,7 @@ export default function MainGame({ CONFIG }: MainGameProps) {
   useEffect(() => {
     const fetchDailyRandom = async () => {
       const response = await fetch(
-        "https://daily-random.vercel.app/getGlobalNumber"
+        "https://daily-random.vercel.app/api/getGlobalNumber"
       );
       const data = await response.json();
       let globalNumber = Number(String(data.globalRandom).slice(0, NUMBER_LENGTH))
