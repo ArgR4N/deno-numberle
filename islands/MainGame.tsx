@@ -7,6 +7,7 @@ import { NumberSpace } from "../routes/index.tsx";
 import Wordle from "./Wordle.tsx";
 import Keyboard from "./Keyboard.tsx";
 import Hints from "./Hints.tsx";
+import getRandFromDate from "../utils/getRandFromDate.ts";
 
 type StateUpdater<S> = (value: S | ((prevState: S) => S)) => void;
 
@@ -91,7 +92,14 @@ export default function MainGame({ CONFIG }: MainGameProps) {
   );
 
   useEffect(() => {
-    const fetchDailyRandom = async () => {
+    if(localStorage.getItem("date") === new Date().toString()) return
+    const newNumber = getRandFromDate(new Date(), NUMBER_LENGTH)
+    localStorage.setItem("number", newNumber.toString())
+    localStorage.setItem("date", new Date().toString())
+    setNumberState(Number.parseInt(newNumber))
+    console.log(newNumber)
+
+/*     const fetchDailyRandom = async () => {
       const response = await fetch(
         "https://daily-random.vercel.app/api/getGlobalNumber"
       );
@@ -103,7 +111,7 @@ export default function MainGame({ CONFIG }: MainGameProps) {
       setNumberState(globalNumber);
     };
 
-    fetchDailyRandom();
+    fetchDailyRandom(); */
   }, []);
 
   const delChar: KeyHandler = () => {
