@@ -7,6 +7,15 @@ import { getEven, getPrime } from "../routes/index.tsx";
 //Ts=>
 import { NumberSpace, Configuration } from "../routes/index.tsx";
 
+const HINTS = [
+  {
+
+  },
+  {
+
+  },
+]
+
 interface HintsProps {
   guesses: NumberSpace[][];
   CONFIG: Configuration;
@@ -29,7 +38,7 @@ export default function Hints({ guesses, CONFIG }: HintsProps) {
   const { COLORS_VALUES, NUMBER } = CONFIG;
 
   const [knowChars, setKnowChars] = useState("? ? ? ?");
-
+  const [hintState, setHintState] = useState(HINTS[0]);
   useEffect(() => {
     setKnowChars(getRelevantColor(guesses));
   }, [guesses]);
@@ -43,20 +52,11 @@ export default function Hints({ guesses, CONFIG }: HintsProps) {
         <strong
           class={tw`bg-${COLORS_VALUES["green"]} px-1 pb-1 rounded hover:bg-green-300`}
         >
-          {" "}
-          {getEven(NUMBER) ? "Even" : "Odd"}{" "}
+          { new Date().getDay()%2 ? NUMBER%2 ? "Even" : "Odd" 
+          : getPrime(NUMBER) ? "Prime" :  "Not Prime"  }
         </strong>
       </h3>
-      <h3 class={tw`m-0 p-0 `}>
-        {" "}
-        &{" "}
-        <strong
-          class={tw`bg-${COLORS_VALUES["green"]} px-1 pb-1 rounded  hover:bg-green-300`}
-        >
-          {" "}
-          {getPrime(NUMBER) ? "" : "!"} Prime{" "}
-        </strong>{" "}
-      </h3>
+
     </div>
   );
 }
