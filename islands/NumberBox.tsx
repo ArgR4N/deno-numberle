@@ -12,7 +12,7 @@ export default function NumberBox({ number }: NumberBoxProps) {
 
   return (
     <div
-      class={tw`flex items-center justify-center bg-[#ffffff] w-8 h-8 border-2 text-grey-200 border-${color}-500 rounded`}
+      class={tw`flex items-center justify-center bg-[#ffffff] w-[7vh] h-[7vh] border-2 text-grey-200 border-${color}-500 rounded`}
     >
       <p class={tw`font-bold text-grey-700`}>{value}</p>
     </div>

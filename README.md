@@ -1,4 +1,6 @@
-# fresh project
+# Numberle (Fresh)
+This is an fresh project based on wordle, but with numbers (shoking...).
+It uses and api for getting a global random number [daily-random](https://www.github.com/argr4n/daily-random)
 
 ### Usage
 

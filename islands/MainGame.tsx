@@ -233,7 +233,7 @@ export default function MainGame({ CONFIG }: MainGameProps) {
         checkRow={checkRow}
       />
       <span
-        class={tw`bg-gray-100 items-center justify-center rounded flex p-2`}
+        class={tw`bg-gray-100 lg:flex-col items-center justify-center rounded flex p-2`}
       >
         <Keyboard
           previousGuesses={previousGuesses}
@@ -241,7 +241,7 @@ export default function MainGame({ CONFIG }: MainGameProps) {
           delChar={delChar}
           checkRow={checkRow}
         />
-        <hr class={tw`border-l-1  border-gray-700 h-12`} />
+        <hr class={tw`border-l-1 border-gray-500 h-12 lg:rotate-90 lg:h-5`} />
         <Hints guesses={previousGuesses} CONFIG={CONFIG} />
       </span>
     </div>
